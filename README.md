@@ -81,28 +81,24 @@ See [`docs/tech-stack.md`](docs/tech-stack.md) for the full breakdown and ration
 
 ## Deployment
 
+**Live URL:** https://ramkumarpazhanivel.github.io/wiz/
+
 ### Automatic (CI/CD)
 
-Every push to `main` triggers GitHub Actions:
+Every push to `main` triggers GitHub Actions (`.github/workflows/deploy.yml`):
 1. Lint + type-check
-2. Build
-3. Deploy to Vercel production
+2. Build (Next.js static export → `./out/`)
+3. Deploy to GitHub Pages
 
-Pull requests get automatic preview deployments at a unique URL.
+No secrets or tokens needed — GitHub Actions has built-in permission to deploy Pages.
 
-### Manual (first-time setup)
+### Migrating to Vercel (when needed)
 
-To connect this repo to Vercel for the first time:
-
-1. Push the repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → **New Project** → import this repo
-3. Accept all defaults (Vercel auto-detects Next.js)
-4. Copy the three secrets from your Vercel project settings into GitHub Secrets:
-   - `VERCEL_TOKEN` — your Vercel personal access token
-   - `VERCEL_ORG_ID` — from `.vercel/project.json` after first deploy
-   - `VERCEL_PROJECT_ID` — from `.vercel/project.json` after first deploy
-
-After that, every push to `main` auto-deploys.
+When the product requires SSR, edge functions, or API routes at scale:
+1. Create a Vercel account and import the GitHub repo
+2. Set `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` as GitHub Secrets
+3. Update `.github/workflows/deploy.yml` to use `amondnet/vercel-action`
+4. Remove `output: 'export'` and `basePath` from `next.config.ts`
 
 ---
 

@@ -12,8 +12,8 @@
 | Language | TypeScript | Catches bugs at compile time; the whole team speaks one language across frontend and backend |
 | Framework | Next.js 15 (App Router) | SSR + API routes in one repo, edge-ready, best-in-class DX, huge ecosystem |
 | Styling | Tailwind CSS v4 | Utility-first, no naming overhead, pairs perfectly with component libraries |
-| Hosting | Vercel | Zero-config deploys for Next.js; free tier; automatic preview URLs per PR; global edge network |
-| CI/CD | GitHub Actions | Standard; runs lint, type-check, and build on every PR; deploys to Vercel on merge to `main` |
+| Hosting | GitHub Pages | Zero-config, free, no secrets needed; auto-deploys via GitHub Actions; migrating to Vercel when SSR/API routes are required |
+| CI/CD | GitHub Actions | Standard; runs lint, type-check, and build on every PR; deploys to GitHub Pages on merge to `main` |
 | Database | PostgreSQL (via Prisma) | Will be added when the first data model is defined (WIZ-3); provisioned on Railway or Supabase |
 | Auth | NextAuth.js (when needed) | Drop-in auth for Next.js; supports OAuth and email magic links |
 | Package manager | npm | Built in, no extra tool to install |
@@ -27,9 +27,9 @@
 
 At this stage one person owns all the code. Splitting into two repos adds overhead (two deploy pipelines, CORS config, API versioning) before there's any product to justify the separation. Next.js API routes are the backend until the product requires dedicated services.
 
-### Why Vercel instead of AWS/GCP?
+### Why GitHub Pages instead of Vercel (for now)?
 
-A startup's first deploy should take 5 minutes, not 5 days. Vercel gives us HTTPS, CDN, preview URLs, and zero-downtime deploys out of the box. We revisit when we hit Vercel's limits or need features like GPU workloads or custom networking.
+A startup's first deploy should take 5 minutes, not 5 days. GitHub Pages gives us HTTPS, CDN, and zero-downtime deploys with zero external configuration — no account, no token, no billing. The trade-off is no SSR: pages are static. We migrate to Vercel (or equivalent) the moment we need API routes, server components with dynamic data, or edge middleware.
 
 ### Why PostgreSQL?
 
